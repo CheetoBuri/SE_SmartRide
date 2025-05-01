@@ -1,0 +1,13 @@
+@startuml
+actor Customer
+participant Ride
+participant Location
+participant Driver
+
+Customer -> Ride: enterPickupAndDropoff()
+Ride -> Location: validateAddresses()
+Location -> Ride: returnValid()
+Ride -> Driver: findAvailableDriver()
+Driver -> Ride: acceptAssignment()
+Ride -> Customer: confirmDriverAndETA()
+@enduml

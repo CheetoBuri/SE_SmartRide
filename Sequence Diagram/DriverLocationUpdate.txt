@@ -1,0 +1,10 @@
+@startuml
+actor Driver
+participant Location
+participant Ride
+actor Customer
+
+Driver -> Location: sendGPSUpdate()
+Location -> Ride: updateDriverPosition()
+Ride -> Customer: updateETAandMap()
+@enduml

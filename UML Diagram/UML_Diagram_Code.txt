@@ -1,0 +1,103 @@
+@startuml
+
+' Main Classes
+
+class Customer {
+  - customerId: String
+  - name: String
+  - phone: String
+  - email: String
+  + bookRide(pickup: Location, dropoff: Location): Ride
+  + makePayment(payment: Payment): void
+  + viewRideStatus(ride: Ride): String
+  + updateProfile(): void
+}
+
+class Driver {
+  - driverId: String
+  - name: String
+  - phone: String
+  - licenseNumber: String
+  - availability: Boolean
+  + acceptRide(ride: Ride): void
+  + updateRideStatus(ride: Ride, status: String): void
+  + updateAvailability(status: Boolean): void
+  + viewPaymentHistory(): List<Payment>
+}
+
+class Ride {
+  - rideId: String
+  - pickupLocation: Location
+  - dropoffLocation: Location
+  - status: String
+  + assignDriver(driver: Driver): void
+  + updateStatus(status: String): void
+  + calculateETA(): int
+}
+
+class Payment {
+  - paymentId: String
+  - amount: Double
+  - method: String
+  - status: String
+  + processPayment(): Boolean
+  + generateReceipt(): String
+}
+
+class Manager {
+  - managerId: String
+  - name: String
+  - email: String
+  + viewReports(): List<Report>
+  + manageAccounts(): void
+  + monitorActivity(): void
+}
+
+class Account {
+  - accountId: String
+  - username: String
+  - password: String
+  - role: String
+  + login(username: String, password: String): Boolean
+  + updateCredentials(): void
+}
+
+' Data Holder Classes
+
+class Vehicle {
+  - vehicleId: String
+  - model: String
+  - licensePlate: String
+  - type: String
+}
+
+class Location {
+  - latitude: Double
+  - longitude: Double
+  - address: String
+}
+
+class Report {
+  - reportId: String
+  - dateGenerated: Date
+  - content: String
+}
+
+' Relationships
+
+Customer --> Account : manages
+Driver --> Account : manages
+Manager --> Account : manages
+
+Customer --> Ride : books
+Driver --> Ride : accepts
+Ride --> Location : uses
+Ride --> Payment : triggers
+
+Driver --> Vehicle : uses
+
+Manager --> Report : views
+Report --> Ride : summarizes
+Report --> Payment : summarizes
+
+@enduml

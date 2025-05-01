@@ -1,0 +1,34 @@
+@startuml
+actor SystemAdmin
+participant Manager
+participant Report
+participant Customer
+participant Account
+participant Driver
+participant Vehicle
+participant Ride
+participant Location
+participant Payment
+
+SystemAdmin -> Manager: initialize()
+Manager -> Report: generateInitialReports()
+
+SystemAdmin -> Driver: registerDriver()
+Driver -> Account: createAccount()
+Driver -> Vehicle: registerVehicle()
+
+SystemAdmin -> Customer: registerCustomer()
+Customer -> Account: createAccount()
+
+Customer -> Ride: createRideRequest()
+Ride -> Location: setPickupDropoff()
+Ride -> Driver: assignAvailableDriver()
+Driver -> Ride: confirmAssignment()
+
+Customer -> Payment: processPayment()
+Payment -> Ride: updatePaymentStatus()
+Payment -> Customer: sendReceipt()
+
+Manager -> Report: generateSummaryReport()
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+actor Manager
+participant Report
+participant Ride
+participant Payment
+participant Driver
+
+Manager -> Report: requestSummaryReport()
+Report -> Ride: getRideData()
+Report -> Payment: getPaymentData()
+Report -> Driver: getDriverData()
+Ride -> Report: returnRideData()
+Payment -> Report: returnPaymentData()
+Driver -> Report: returnDriverData()
+Report -> Manager: generateAndDisplayReport()
+@enduml

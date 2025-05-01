@@ -1,0 +1,14 @@
+@startuml
+participant Ride
+participant Payment
+actor Customer
+participant PaymentGateway
+
+Ride -> Payment: sendRideDetails(fare)
+Payment -> Customer: requestPaymentMethod()
+Customer -> Payment: providePaymentDetails()
+Payment -> PaymentGateway: processTransaction()
+PaymentGateway -> Payment: transactionResult()
+Payment -> Ride: updatePaymentStatus()
+Payment -> Customer: sendReceipt()
+@enduml
