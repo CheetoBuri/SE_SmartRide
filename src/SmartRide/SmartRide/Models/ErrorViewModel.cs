@@ -1,4 +1,4 @@
-namespace Test_dotNET_MVC.Models
+namespace SmartRide.Models
 {
     public class ErrorViewModel
     {

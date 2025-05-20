@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Test_dotNET_MVC.Models;
+using SmartRide.Models;
 
-namespace Test_dotNET_MVC.Controllers
+namespace SmartRide.Controllers
 {
     public class HomeController : Controller
     {
