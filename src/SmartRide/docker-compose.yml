@@ -4,7 +4,7 @@ services:
     container_name: sqlserver_smart_ride
     image: mcr.microsoft.com/azure-sql-edge:latest
     ports:
-      - "2005:1433"
+      - "8081:1433"
     environment:
       - ACCEPT_EULA=Y
       - MSSQL_SA_PASSWORD=MyPassword123.
