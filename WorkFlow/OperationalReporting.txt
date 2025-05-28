@@ -1,0 +1,19 @@
+@startuml
+|Manager|
+start
+:Open reporting dashboard;
+:Select report parameters (date range, metrics);
+|ReportGenerator|
+:Fetch ride data;
+:Fetch payment data;
+:Fetch driver activity data;
+:Aggregate and analyze data;
+:Generate report content (tables/charts);
+|Manager|
+:View report;
+if (Export needed?) then (yes)
+  :Select export format (PDF/CSV);
+  :Export and download report;
+endif
+stop
+@enduml

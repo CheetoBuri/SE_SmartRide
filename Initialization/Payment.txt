@@ -1,0 +1,13 @@
+@startuml
+participant Main
+participant PaymentRepository
+participant Payment
+
+Main -> PaymentRepository: getPendingPayments()
+PaymentRepository --> Main: list of pendingPaymentRecords
+
+loop [for each paymentRecord]
+  Main -> Payment: new Payment(record)
+  Payment --> Main: instance created
+end
+@enduml

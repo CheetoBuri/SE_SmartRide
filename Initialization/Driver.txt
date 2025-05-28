@@ -1,0 +1,13 @@
+@startuml
+participant Main
+participant DriverRepository
+participant Driver
+
+Main -> DriverRepository: getAllDrivers()
+DriverRepository --> Main: list of driverRecords
+
+loop [for each driverRecord]
+  Main -> Driver: new Driver(record)
+  Driver --> Main: instance created
+end
+@enduml

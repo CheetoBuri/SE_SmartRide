@@ -1,0 +1,24 @@
+@startuml
+participant Customer
+participant PaymentController
+participant PaymentService
+participant PaymentGateway
+participant RideService
+
+Customer -> PaymentController: POST /payments {rideId, method}
+PaymentController -> PaymentService: processPayment(rideId, method)
+PaymentService -> RideService: getRideDetails(rideId)
+RideService --> PaymentService: rideAmount
+PaymentService -> PaymentGateway: charge(amount, method)
+PaymentGateway --> PaymentService: gatewayResponse
+alt success
+  PaymentService -> PaymentRepository: savePayment(status=Paid)
+  PaymentService -> RideService: updatePaymentStatus(rideId, Paid)
+  PaymentService --> PaymentController: receipt
+  PaymentController --> Customer: 200 OK + receipt
+else failure
+  PaymentService -> PaymentRepository: savePayment(status=Failed)
+  PaymentService --> PaymentController: error
+  PaymentController --> Customer: 402 Payment Required
+end
+@enduml

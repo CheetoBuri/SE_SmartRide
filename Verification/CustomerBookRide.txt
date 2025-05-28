@@ -1,0 +1,21 @@
+@startuml
+participant Customer
+participant RideController
+participant RideService
+participant LocationService
+participant RideManager
+participant DriverRepository
+
+Customer -> RideController: POST /rides {pickup, dropoff}
+RideController -> RideService: createRideRequest(customerId, pickup, dropoff)
+RideService -> LocationService: validateCoordinates(pickup, dropoff)
+LocationService --> RideService: valid
+RideService -> RideManager: findAndAssignDriver(request)
+RideManager -> DriverRepository: findAvailableNear(pickup)
+DriverRepository --> RideManager: [driver1, driver2,...]
+RideManager -> RideManager: selectBestDriver(list)
+RideManager -> RideService: assignDriver(driver)
+RideService -> RideRepository: saveRide(ride)
+RideService --> RideController: rideDetails
+RideController --> Customer: 201 Created + rideDetails
+@enduml

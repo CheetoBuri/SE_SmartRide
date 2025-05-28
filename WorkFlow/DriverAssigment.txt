@@ -1,0 +1,36 @@
+@startuml
+|Customer|
+start
+:Submit ride request;
+|RideManager|
+:Receive ride request;
+:Validate request data;
+if (Valid?) then (yes)
+  :Query available drivers;
+  :Filter by proximity & availability;
+  if (Drivers found?) then (yes)
+    :Select best driver;
+    :Send ride notification;
+  else (no)
+    :Return “No drivers available”;
+    stop
+  endif
+else (no)
+  :Return “Invalid request”;
+  stop
+endif
+|Driver|
+:Receive notification;
+if (Accept?) then (yes)
+  :Confirm assignment;
+  |RideManager|
+  :Update ride status to “Accepted”;
+  |Customer|
+  :Notify customer with driver details;
+else (Decline)
+  :Decline assignment;
+  |RideManager|
+  :Retry assignment or notify failure;
+endif
+stop
+@enduml

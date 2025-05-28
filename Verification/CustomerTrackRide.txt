@@ -1,0 +1,13 @@
+@startuml
+participant Driver
+participant GPSService
+participant RideService
+participant NotificationService
+participant Customer
+
+Driver -> GPSService: sendLocation(rideId, lat, lon)
+GPSService -> RideService: updateRideLocation(rideId, lat, lon)
+RideService -> RideService: recalcETA(rideId)
+RideService -> NotificationService: notifyCustomer(rideId, location, ETA)
+NotificationService --> Customer: push(location, ETA)
+@enduml
