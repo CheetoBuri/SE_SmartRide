@@ -1,0 +1,44 @@
+@startuml
+|Customer|
+start
+:Open “Book Ride” screen;
+:Select pickup (map or current GPS);
+:Select drop-off location;
+:Tap “Request Ride”;
+
+|RideManager|
+:Validate locations;
+:Calculate ETA for each vehicle type;
+:Query available Drivers near pickup;
+if (Driver Found?) then (yes)
+  :Select best Driver (ETA, fairness);
+  :Assign Driver to Ride;
+  :Persist Ride record;
+  -> Driver : Send ride request notification
+else (no)
+  :Return “No drivers available” to Customer;
+  stop
+endif
+
+|Driver|
+:View incoming ride request;
+if (Accept?) then (yes)
+  :Confirm assignment;
+  -> RideManager : Notify acceptance
+else (Decline)
+  -> RideManager : Notify decline
+endif
+
+|RideManager|
+if (Declined?) then (yes)
+  :Retry assignment with next Driver;
+  -> Customer : Update ETA or “no drivers”
+else (Accepted)
+  :Update Ride status to “Accepted”;
+  -> Customer : Send Driver details + ETA
+endif
+
+|Customer|
+:View Driver details and live ETA;
+stop
+@enduml

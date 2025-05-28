@@ -1,0 +1,31 @@
+@startuml
+|Customer|
+start
+note right: After Ride status = Completed
+:Open payment screen;
+:Review fare amount;
+:Tap “Pay Now”;
+
+|PaymentProcessor|
+:Calculate final fare;
+:Create Payment record (Pending);
+-> PaymentGateway : Initiate transaction (card/wallet)
+
+|PaymentGateway|
+:Process transaction;
+--> PaymentProcessor : Return success/failure
+
+|PaymentProcessor|
+if (Success?) then (yes)
+  :Mark Payment = Paid;
+  :Generate digital receipt (PDF or data);
+  -> RideManager : Update ride.paymentStatus
+  -> Customer : Send receipt + confirmation
+else (no)
+  :Mark Payment = Failed;
+  -> Customer : Show “Payment failed” + retry option
+endif
+
+|Customer|
+stop
+@enduml

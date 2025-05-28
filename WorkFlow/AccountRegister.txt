@@ -1,0 +1,38 @@
+@startuml
+|Customer|
+start
+:Open SmartRide App;
+:Tap “Register”;
+:Enter name, email/phone, password, role;
+:Submit registration;
+
+|AccountService|
+:Validate input;
+if (Valid?) then (yes)
+  :Create Account record;
+  :Send verification email/SMS;
+else (no)
+  :Return error to Customer;
+  stop
+endif
+
+|Customer|
+:Verify email/SMS code;
+:Tap “Login”;
+:Enter credentials;
+:Submit login;
+
+|AccountService|
+:Authenticate credentials;
+if (Authenticated?) then (yes)
+  :Issue session token;
+  :Return success;
+else (no)
+  :Return login error;
+  stop
+endif
+
+|Customer|
+:Display dashboard;
+stop
+@enduml
