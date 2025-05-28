@@ -1,0 +1,29 @@
+@startuml
+' === Entity Classes ===
+class Customer
+class Driver
+class Manager
+class Ride
+class Payment
+class Account
+class Vehicle
+class Location
+class Report
+
+' === Relationships ===
+Customer "1" o-- "1" Account : has
+Driver   "1" o-- "1" Account : has
+Manager  "1" o-- "1" Account : has
+
+Customer "1" -- "*" Ride   : books
+Driver   "1" -- "*" Ride   : fulfills
+
+Ride     "1" -- "1" Payment: is paid by
+Ride     "1" -- "1" Location: pickup & drop-off
+
+Driver   "1" -- "1" Vehicle: operates
+
+Manager  "1" -- "*" Report : generates
+Report   "*" -- "*" Ride   : summarizes
+Report   "*" -- "*" Payment: summarizes
+@enduml

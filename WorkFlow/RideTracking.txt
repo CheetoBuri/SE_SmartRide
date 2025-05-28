@@ -1,0 +1,18 @@
+@startuml
+|Driver|
+start
+:Begin trip;
+repeat
+  :Send GPS update;
+  |LocationService|
+  :Update driver coordinates;
+  |Ride|
+  :Recalculate ETA;
+  |Customer|
+  :Refresh map & ETA display;
+repeat while (Ride not complete?)
+:Send trip completion status;
+|Ride|
+:Update ride status to “Completed”;
+stop
+@enduml
