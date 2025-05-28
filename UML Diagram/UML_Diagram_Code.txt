@@ -55,7 +55,7 @@ class Manager {
 
 class Account {
   - accountId: String
-  - username: String
+  - email: String
   - password: String
   - role: String
   + login(username: String, password: String): Boolean
