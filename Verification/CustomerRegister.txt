@@ -1,0 +1,30 @@
+@@startuml
+participant Customer
+participant AccountController
+participant AccountService
+participant AccountRepository
+participant EmailService
+
+Customer -> AccountController: POST /register(details)
+AccountController -> AccountService: register(details)
+AccountService -> AccountRepository: saveNewAccount(details)
+AccountRepository --> AccountService: accountRecord
+AccountService -> EmailService: sendVerificationEmail(account.email)
+EmailService --> AccountService: confirmationSent
+AccountService --> AccountController: 201 Created
+AccountController --> Customer: Registration successful
+
+Customer -> AccountController: POST /login(credentials)
+AccountController -> AccountService: authenticate(credentials)
+AccountService -> AccountRepository: findByUsername(username)
+AccountRepository --> AccountService: accountRecord
+AccountService -> AccountService: verifyPassword(credentials, record)
+alt success
+  AccountService -> AccountService: generateSessionToken()
+  AccountService --> AccountController: token
+  AccountController --> Customer: 200 OK + token
+else failure
+  AccountService --> AccountController: 401 Unauthorized
+  AccountController --> Customer: Login failed
+end
+@enduml

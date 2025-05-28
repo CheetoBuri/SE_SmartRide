@@ -1,0 +1,19 @@
+@startuml
+participant Manager
+participant ReportController
+participant ReportService
+participant RideRepository
+participant PaymentRepository
+participant ReportGenerator
+
+Manager -> ReportController: GET /reports?range=last30days
+ReportController -> ReportService: generateReport(params)
+ReportService -> RideRepository: fetchRides(range)
+RideRepository --> ReportService: ridesData
+ReportService -> PaymentRepository: fetchPayments(range)
+PaymentRepository --> ReportService: paymentsData
+ReportService -> ReportGenerator: buildReport(ridesData, paymentsData)
+ReportGenerator --> ReportService: report
+ReportService --> ReportController: report
+ReportController --> Manager: 200 OK + report
+@enduml

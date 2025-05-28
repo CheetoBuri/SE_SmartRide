@@ -1,0 +1,13 @@
+@startuml
+participant Main
+participant AccountRepository
+participant Account
+
+Main -> AccountRepository: getAllAccounts()
+AccountRepository --> Main: list of accountRecords
+
+loop [for each accountRecord]
+  Main -> Account: new Account(record)
+  Account --> Main: instance created
+end
+@enduml

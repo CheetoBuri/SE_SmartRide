@@ -1,0 +1,17 @@
+@startuml
+participant Main
+participant ReportGenerator
+participant RideRepository
+participant PaymentRepository
+participant Report
+
+Main -> ReportGenerator: initialize()
+ReportGenerator -> RideRepository: getAllRides()
+RideRepository --> ReportGenerator: rideData
+
+ReportGenerator -> PaymentRepository: getAllPayments()
+PaymentRepository --> ReportGenerator: paymentData
+
+ReportGenerator -> Report: new Report(rideData, paymentData)
+Report --> Main: instance created
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+participant Main
+participant LocationService
+participant LocationCache
+
+Main -> LocationService: preloadServiceAreaPolygons()
+LocationService --> Main: service area data
+
+Main -> LocationCache: initialize(cacheData)
+LocationCache --> Main: ready
+@enduml

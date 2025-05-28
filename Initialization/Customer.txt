@@ -1,0 +1,13 @@
+@startuml
+participant Main
+participant CustomerRepository
+participant Customer
+
+Main -> CustomerRepository: getAllCustomers()
+CustomerRepository --> Main: list of customerRecords
+
+loop [for each customerRecord]
+  Main -> Customer: new Customer(record)
+  Customer --> Main: instance created
+end
+@enduml

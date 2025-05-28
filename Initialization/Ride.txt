@@ -1,0 +1,16 @@
+@startuml
+participant Main
+participant RideRepository
+participant Ride
+participant Location
+
+Main -> RideRepository: getAllActiveRides()
+RideRepository --> Main: list of rideRecords
+
+loop [for each rideRecord]
+  Main -> Ride: new Ride(rideRecord)
+  Ride -> Location: new Location(pickup, dropoff)
+  Location --> Ride: location set
+  Ride --> Main: instance created
+end
+@enduml

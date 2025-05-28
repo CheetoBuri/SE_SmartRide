@@ -1,0 +1,13 @@
+@startuml
+participant Main
+participant VehicleRepository
+participant Vehicle
+
+Main -> VehicleRepository: getAllVehicles()
+VehicleRepository --> Main: list of vehicleRecords
+
+loop [for each vehicleRecord]
+  Main -> Vehicle: new Vehicle(record)
+  Vehicle --> Main: instance created
+end
+@enduml
